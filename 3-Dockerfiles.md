@@ -85,8 +85,13 @@ docker image build <CONTEXT>
 # 2. Use version pinning --> ( python3-pip=20.0.2 )
 # 3. Use COPY instead of ADD instruction
 # 4. Use "--no-cache" flag - In order to rerun ALL instructions 
-#   docker image build --no-cache -t myapp .
+# 5. Use "--no-cache" flag - Intermediate containers created removed automatically
 
+# Bash command
+$ docker build --force-rm --no-cache -t <image-name>:<tag> <path-to-dockerfile>
+
+#################################
+# Dockerfile
 FROM ubuntu
 
 RUN apt update && apt install -y  \

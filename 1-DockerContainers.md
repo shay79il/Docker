@@ -74,6 +74,9 @@ docker container rename ubuntu-server ubuntu-sv
 
 # Kill and remove running docker container
 docker container kill <container-name/id>
+
+# Kill and remove ALL docker containers
+docker container rm $(docker container ls -aq)
 ```
 
 ## LISTING

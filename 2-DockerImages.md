@@ -39,6 +39,17 @@ docker pull httpd
 
 ```
 
+## Docker Login
+
+```bash
+# First export env variables
+export DOCKER_USER='docker_username'
+export DOCKER_PASS='docker_password'
+
+# Use --password-stdin
+echo "$DOCKER_PASS" | docker login --username "$DOCKER_USER" --password-stdin
+
+```
 ## Docker PUSH
 
 ```bash
@@ -47,9 +58,6 @@ docker pull httpd
 
 # For all the following we MUST be authenticated
 docker pull gcr.io/organization/ubuntu
-
-# That why we have to LOGIN
-docker login <Docker Registry>
 
 # Create a SOFT link to an existing image
 # docker image tag oldTag newTag
@@ -89,7 +97,9 @@ docker image inspect ubuntu -f '{{ .Os }}'
 ```
 
 ## Docker save and load images
-### Lets say we have a restricted ENV with no internet connection to download images 
+
+### Lets say we have a restricted ENV with no internet connection to download images
+
 ```bash
 
 # Pull needed images to a NON-RESTRICTED Host
@@ -99,12 +109,13 @@ docker pull ubuntu
 docker image save ubuntu -o ubuntu.tar
 
 # Move the TAR file to the RESTRICTED Host
-scp /path/to/RESTRICTED-Host/ubuntu.tar /path/to/NON-RESTRICTED-Host/  
+scp /path/to/RESTRICTED-Host/ubuntu.tar /path/to/NON-RESTRICTED-Host/
 
 docker image load -i ubuntu.tar
 ```
 
 ## Docker containers exported to images
+
 ```bash
 
 # Create image TAR from a running container
@@ -115,7 +126,9 @@ docker image import container.tar newImage:latest
 ```
 
 ## Docker commit
+
 ### Create new container after customize
+
 ```bash
 
 docker run -d --name=httpd httpd
@@ -123,7 +136,7 @@ docker run -d --name=httpd httpd
 # Customize the container
 docker exec -it httpd bash
 echo "Welcome all" > htdocs/index.html
-  
+
 # Stop the container
 docker container stop httpd
 
@@ -133,6 +146,3 @@ docker container commit httpd custom-httpd
 docker image ls
 
 ```
-
-
-
